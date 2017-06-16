@@ -1,5 +1,6 @@
 ---
 - name: Pamd debug
+  hosts: all
   tasks:
         - name: load PAM varaibles
           include_vars:
