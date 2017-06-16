@@ -21,6 +21,7 @@ __metaclass__ = type
 
 from ansible.plugins.callback.default import CallbackModule as CallbackModule_default
 
+GOAV+IQWNV{WIN
 
 class CallbackModule(CallbackModule_default):
 
