@@ -1,0 +1,43 @@
+---
+- name: Pamd debug
+  hosts: localhost
+  become: true
+  tasks:
+        - name: load PAM varaibles
+          include_vars:
+            file: pam.yml
+
+        - name: Instantiate Compliance Report
+          set_fact:
+            password_compliance_report: []
+
+        - name: AD.1.1.1.0.0 | PATCH | PASSWORD | Implement all password controls for key common services (PAM)
+          pamd:
+            name: "{{ pam_service.name }}"
+            type: "{{ pam_service.type }}"
+            control: "{{ pam_service.control }}"
+            module_path: "{{ pam_service.mpath }}"
+            new_type: "{{ pam_service.ntype }}"
+            new_control: "{{ pam_service.ncontrol }}"
+            new_module_path: "{{ pam_service.nmpath }}"
+            state: "{{ pam_service.state }}"
+          with_items: "{{ harden_rhel7_pam_services }}"
+          loop_control:
+            loop_var: pam_service
+            label: ""
+          tags:
+            - AD.1.1.1.0.0
+            - patch
+            - password
+          register: __ad_1_1_1_0_0
+
+        - name: AD.1.1.7.1 | PATCH | PASSWORD |  PermitRootLogin no (sshd_config)
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: '^PermitRootLogin yes'
+            insertafter: '^#PermitRootLogin yes'
+            line: PermitRootLogin no
+          tags:
+            - AD.1.1.7.1
+            - patch
+            - password

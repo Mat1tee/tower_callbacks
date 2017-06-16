@@ -1,0 +1,97 @@
+harden_rhel7_pam_services:    # AD.1.1.1.0.0
+  - name: login
+    type: auth
+    control: include
+    mpath: postlogin
+    ntype: auth
+    ncontrol: include
+    nmpath: system-auth
+    state: after 
+  - name: login
+    type: account
+    control: required
+    mpath: pam_nologin.so
+    ntype: account
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: login
+    type: account 
+    control: include
+    mpath: system-auth
+    ntype: password
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: passwd
+    type: account
+    control: include
+    mpath: system-auth
+    ntype: auth
+    ncontrol: include
+    nmpath: system-auth
+    state: before 
+  - name: passwd
+    type: auth
+    control: include
+    mpath: system-auth
+    ntype: account
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: passwd
+    type: account 
+    control: include
+    mpath: system-auth
+    ntype: password
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: sshd
+    type: auth
+    control: include
+    mpath: postlogin
+    ntype: auth
+    ncontrol: include
+    nmpath: system-auth
+    state: after 
+  - name: sshd
+    type: account
+    control: include
+    mpath: password-auth
+    ntype: account
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: sshd
+    type: account 
+    control: include
+    mpath: password-auth
+    ntype: password
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: su
+    type: auth
+    control: sufficient
+    mpath: pam_rootok.so
+    ntype: auth
+    ncontrol: include
+    nmpath: system-auth
+    state: after 
+  - name: su
+    type: account
+    control: sufficient
+    mpath: pam_succeed_if.so
+    ntype: account
+    ncontrol: include
+    nmpath: system-auth
+    state: after
+  - name: su
+    type: session 
+    control: include
+    mpath: system-auth
+    ntype: password
+    ncontrol: include
+    nmpath: system-auth
+    state: before
