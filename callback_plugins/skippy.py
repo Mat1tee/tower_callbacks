@@ -21,8 +21,6 @@ __metaclass__ = type
 
 from ansible.plugins.callback.default import CallbackModule as CallbackModule_default
 
-GOAV+IQWNV{WIN
-
 class CallbackModule(CallbackModule_default):
 
     '''
@@ -38,4 +36,7 @@ class CallbackModule(CallbackModule_default):
         pass
 
     def v2_runner_item_on_skipped(self, result):
+        pass
+    
+    def v2_runner_on_ok(self, result):
         pass
