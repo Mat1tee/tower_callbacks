@@ -1,7 +1,5 @@
 ---
 - name: Pamd debug
-  hosts: localhost
-  become: true
   tasks:
         - name: load PAM varaibles
           include_vars:
